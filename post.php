@@ -9,8 +9,8 @@ define("IMAGES_TILL_TEXT", 1000);
 include_once 'src/facebook.php';
 include_once 'src/file_operations.php';
 
-$appId = '315799678555644';
-$secret = '2cce64d8c1122a1d26d3d039cbf28cf2';
+$appId = '238816542959619';
+$secret = '59d334831df66a763c29e94197350122';
 $returnurl = 'http://www.facebook.com/riseupquote';
 $permissions = 'manage_pages,offline_access,publish_stream';
 
