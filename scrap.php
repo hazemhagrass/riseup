@@ -3,22 +3,18 @@ define("ROOT", 'scrapper/');
 define("PAGES", 'pages');
 
 include_once 'src/facebook.php';
+include_once 'src/config.php';
 
-$appId = '238816542959619';
-$secret = '59d334831df66a763c29e94197350122';
-$access_token = '238816542959619|U5cb6Fx9rM4cEg8vOJL3rDXIPWk';
-$returnurl = 'http://www.facebook.com/riseupquote';
-$permissions = 'manage_pages,offline_access,publish_stream';
 
 //read pages to scrap from pages file
 $pagesFileContent = file_get_contents(PAGES);
 $pages = explode("\n", $pagesFileContent);
 
-$fb = new Facebook(array('appId'=>$appId, 'secret'=>$secret));
+$fb = new Facebook(array('appId'=>$config['app_id'], 'secret'=>$config['app_secret']));
 
-function retrievePagePhotos ($fb, $access_token, $pageId){
+function retrievePagePhotos ($fb, $page_access_token, $pageId){
 	$photos = array();
-	$args = array('access_token' => $access_token);
+	$args = array('access_token' => $page_access_token);
 	$publicFeed = $fb->api('/' . $pageId . '/albums?fields=photos.limit(5).fields(picture,source)',
 		$args);
 
@@ -52,7 +48,7 @@ function downloadPhoto($localPath, $url){
 }
 
 $fbuser = $fb->getUser();
-$access_token = $fb->getAccessToken();
+$access_token = $config['app_access_token'];
 if($fbuser){
 	try{
 		foreach ($pages as $page){
@@ -85,15 +81,9 @@ if($fbuser){
 	}
 
 }else{
-	$fbloginurl = $fb->getLoginUrl(array('redirect-uri'=>$returnurl,
-		'scope'=>$permissions, 'fbconnect' => 1));
+	$fbloginurl = $fb->getLoginUrl(array('redirect-uri'=>$config['return_url'],
+		'scope'=>$config['permissions'], 'fbconnect' => 1));
 	echo '<a id="login" href="'.$fbloginurl.'">Login with Facebook</a>';
 }
 
 ?>
-
-<script>
-var el = document.getElementById('login');
-if(el != null)
-	el.click();
-</script>
