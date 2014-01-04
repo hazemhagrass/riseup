@@ -11,13 +11,13 @@ include_once 'src/file_operations.php';
 
 $appId = '238816542959619';
 $secret = '59d334831df66a763c29e94197350122';
+$access_token = '238816542959619|U5cb6Fx9rM4cEg8vOJL3rDXIPWk';
 $returnurl = 'http://www.facebook.com/riseupquote';
 $permissions = 'manage_pages,offline_access,publish_stream';
 
 $fb = new Facebook(array('appId'=>$appId, 'secret'=>$secret));
 
 $fbuser = $fb->getUser();
-$access_token = $fb->getAccessToken();
 if($fbuser){
 
 	try{
