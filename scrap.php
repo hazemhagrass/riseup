@@ -47,43 +47,37 @@ function downloadPhoto($localPath, $url){
 	file_put_contents($photo, file_get_contents($url));
 }
 
-$fbuser = $fb->getUser();
 $access_token = $config['app_access_token'];
-if($fbuser){
-	try{
-		foreach ($pages as $page){
-			$pageUrl = ROOT . $page . '/';
-			if (!file_exists($pageUrl)) 
-				mkdir($pageUrl, 0777);
 
-			echo "==================================";
-			echo "</br>";
-			echo "Page: " . $page;
-			echo "</br>";
-			echo "==================================";
-			echo "</br>";
-			$photos = retrievePagePhotos($fb, $access_token, $page);
-			echo "number of photos: " . count($photos);
-			echo "</br>";
-			echo "----------------------------------";
-			echo "</br>";
+try{
+	foreach ($pages as $page){
+		$pageUrl = ROOT . $page . '/';
+		if (!file_exists($pageUrl)) 
+			mkdir($pageUrl, 0777);
 
-			foreach ($photos as $photo){
-				downloadPhoto($pageUrl, $photo);
-			}
-			echo "</br>";
-			echo "</br>";
-			echo "</br>";
+		echo "==================================";
+		echo "</br>";
+		echo "Page: " . $page;
+		echo "</br>";
+		echo "==================================";
+		echo "</br>";
+		$photos = retrievePagePhotos($fb, $access_token, $page);
+		echo "number of photos: " . count($photos);
+		echo "</br>";
+		echo "----------------------------------";
+		echo "</br>";
+
+		foreach ($photos as $photo){
+			downloadPhoto($pageUrl, $photo);
 		}
-
-	}catch(FacebookApiException $e){
-		echo $e->getMessage();
+		echo "</br>";
+		echo "</br>";
+		echo "</br>";
 	}
 
-}else{
-	$fbloginurl = $fb->getLoginUrl(array('redirect-uri'=>$config['return_url'],
-		'scope'=>$config['permissions'], 'fbconnect' => 1));
-	echo '<a id="login" href="'.$fbloginurl.'">Login with Facebook</a>';
+}catch(FacebookApiException $e){
+	echo $e->getMessage();
 }
+
 
 ?>
