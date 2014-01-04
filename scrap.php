@@ -12,9 +12,9 @@ $pages = explode("\n", $pagesFileContent);
 
 $fb = new Facebook(array('appId'=>$config['app_id'], 'secret'=>$config['app_secret']));
 
-function retrievePagePhotos ($fb, $page_access_token, $pageId){
+function retrievePagePhotos ($fb, $pageId){
 	$photos = array();
-	$args = array('access_token' => $page_access_token);
+	$args = array('access_token' => $config['app_access_token']);
 	$publicFeed = $fb->api('/' . $pageId . '/albums?fields=photos.limit(5).fields(picture,source)',
 		$args);
 
@@ -47,8 +47,6 @@ function downloadPhoto($localPath, $url){
 	file_put_contents($photo, file_get_contents($url));
 }
 
-$access_token = $config['app_access_token'];
-
 try{
 	foreach ($pages as $page){
 		$pageUrl = ROOT . $page . '/';
@@ -61,7 +59,7 @@ try{
 		echo "</br>";
 		echo "==================================";
 		echo "</br>";
-		$photos = retrievePagePhotos($fb, $access_token, $page);
+		$photos = retrievePagePhotos($fb, $page);
 		echo "number of photos: " . count($photos);
 		echo "</br>";
 		echo "----------------------------------";

@@ -10,6 +10,20 @@ include_once 'src/facebook.php';
 include_once 'src/config.php';
 include_once 'src/file_operations.php';
 
+function swap_access_token_for_page($access_token, $page_id)
+{
+    $accounts = file_get_contents('https://graph.facebook.com/me/accounts?access_token='.$access_token);
+    $accounts = json_decode($accounts, true);
+ 
+    if (isset($accounts['data'])) {
+        foreach ($accounts['data'] as $account) {
+            if ($page_id == $account['id']) {
+                return $account['access_token'];
+            }
+        }
+    }
+}
+
 
 	try{
 		$fb = new Facebook(array('appId'=>$config['app_id'], 'secret'=>$config['app_secret']));
@@ -34,10 +48,13 @@ include_once 'src/file_operations.php';
 		$pathDone = $root . 'published/' . $randomFile;
 		
 		$text_post = $index % IMAGES_TILL_TEXT == 0 ? file_get_contents($path) : '';
-				
+		
+		$new_access_token = swap_access_token_for_page($config['offline_access_token'], $config['page_id']);
+
+
 		//post image
 		$fb->setFileUploadSupport(true);
-		$args = array('message' => $text_post, 'access_token' => $page_info['access_token']);
+		$args = array('message' => $text_post, 'access_token' => $new_access_token);
 		if($index % IMAGES_TILL_TEXT == 0){
 			$args['picture'] = '';
 			$args['caption'] = '';
