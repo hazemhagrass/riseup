@@ -1,7 +1,7 @@
 
 <?php
-define("ROOT", 'posts/image');
-define("ROOT_TEXT", 'posts/text');
+define("ROOT", 'posts/image/');
+define("ROOT_TEXT", 'posts/text/');
 
 define("INDEX_FILE", 'posts_index');
 define("IMAGES_TILL_TEXT", 1000);
