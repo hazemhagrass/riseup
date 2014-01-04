@@ -1,6 +1,6 @@
 
 <?php
-define("ROOT", 'posts/images');
+define("ROOT", 'posts/image');
 define("ROOT_TEXT", 'posts/text');
 
 define("INDEX_FILE", 'posts_index');
