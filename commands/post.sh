@@ -1,5 +1,5 @@
 while :
 do
 	curl hazemhagrass.com:8080/post.php
-	sleep 30m
+	sleep 60m
 done
