@@ -1,3 +1,7 @@
 Read this articles carefully:
 
 1- http://www.testically.org/2011/09/27/5-steps-to-automatically-write-on-your-facebook-page-wall-using-the-graph-api-without-a-logged-in-user/
+2- http://stackoverflow.com/questions/9225806/how-to-post-to-a-facebook-page-with-php
+example:
+
+https://www.facebook.com/dialog/oauth?client_id=238816542959619&redirect_uri=http://hazemhagrass.com:8080/&scope=manage_pages&response_type=token
