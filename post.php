@@ -37,7 +37,7 @@ function swap_access_token_for_page($access_token, $page_id)
 		//post text every IMAGES_TILL_TEXT(=5) images
 		$root = $index % IMAGES_TILL_TEXT == 0 ? ROOT_TEXT : ROOT;
 		
-		$page_info = $fb->api("https://graph.facebook.com/" . $config['page_id'] . "?fields=access_token");
+		$page_info = $fb->api("" . $config['page_id'] . "?fields=access_token");
 		echo 'Post is prepared';
 		echo '</br>';
 
